@@ -36,6 +36,6 @@ $$ \bigvee\limits_{v\in V}(x_{v,k}) $$
 
 4. Pour chaque sommet $v$, si $d(v) > 0$, alors il existe un sommet $u$ tel que ${u;v}\in E$, et $d(u)=d(v-1)$.
 
-$$ \bigwedge\limits_{v \in V} (\bigvee\limits_{u \in V; u \neq v; {u;v}\in E} (\bigvee\limits_{0 \leq i < k; j = i+1}(x_{v,j} \rightarrow x_{u,i}))) \equiv \bigvee\limits_{v \in V} (\bigwedge\limits_{u \in V; u \neq v; {u;v}\in E} (\bigvee\limits_{0 \leq i < k; j = i+1}(\neg x_{v,j} \lor x_{u,i}))) $$
+$$ \bigwedge\limits_{v \in V} (\bigwedge\limits_{u \in V; u \neq v; {u;v}\in E} (\bigvee\limits_{0 \leq i < k; j = i+1}(x_{v,j} \rightarrow x_{u,i}))) \equiv \bigwedge\limits_{v \in V} (\bigwedge\limits_{u \in V; u \neq v; {u;v}\in E} (\bigvee\limits_{0 \leq i < k; j = i+1}(\neg x_{v,j} \lor x_{u,i}))) $$
 
 \end{document}
