@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Partie II, réduction de Chaine Hamiltonienne vers HAC}
+
+Étant donné q'un chemin Hamiltonien est un chemin qui passe par tous les sommets du graphe $G$ et qui a $n$ arrêtes, avec $n = |G|$. Dans le cas où l'on supprime un arête quelconque $v$ de $G$, on se trouve face à une chaîne qui n'est plus un cycle.
+Cette chaîne peut donc être assimilée à un arbre à une seule branche.
+
+Notons $CH$ le graphe du chemin Hamiltonien, et $CH / {v}$ celui du graphe décrit ci dessus.
+
+\smallbreak
+
+On se trouve dans la situation ou $CH / {v}$ est un cas particulier de $HAC$. En effet, nous sommes bien face à un arbre couvrant du graphe $G$, qui possède une seule branche et une seule feuille, avec une profondeur de $n-1$.
+
+
+\section{Partie III, Formules SAT}
+
+Pour décrire une réduction polynomiale de HAC vers SAT, nous avons déduit de l'énoncé les formules booléennes en forme normale conjonctives suivantes : 
+
+\bigbreak
+
+1. Pour chaque sommet $v \in V$, il y a un unique entier $h$ tel que $x_{v,h}$ est vrai
+
+$$ \bigwedge\limits_{v \in V} (\bigwedge\limits_{0 \leq i \leq k} (\bigwedge\limits_{0 \leq j \leq k; j \neq i}(x_{v,i} \rightarrow \neg x_{v,j}))) \equiv \bigwedge\limits_{v \in V} (\bigwedge\limits_{0 \leq i \leq k} (\bigwedge\limits_{0 \leq j \leq k; j \neq i}(\neg x_{v,i} \lor \neg x_{v,j}))) $$
+
+
+2. Il y à un unique sommet $ v $ tel que $d(v) = 0$
+
+$$ \bigwedge\limits_{v \in V} (\bigwedge\limits_{u \in V;\\ u \neq v} (x_{v,0} \rightarrow \neg x_{u,0})) \equiv \bigwedge\limits_{v \in V} (\bigwedge\limits_{u \in V;\\ u \neq v} (\neg x_{v,0} \lor \neg x_{u,0})) $$
+
+3. Il y a un moins un sommet $v$ tel que $d(v)=k$.
+
+$$ \bigvee\limits_{v\in V}(x_{v,k}) $$
+
+
+4. Pour chaque sommet $v$, si $d(v) > 0$, alors il existe un sommet $u$ tel que ${u;v}\in E$, et $d(u)=d(v-1)$.
+
+$$ \bigwedge\limits_{v \in V} (\bigvee\limits_{u \in V; u \neq v; {u;v}\in E} (\bigvee\limits_{0 \leq i < k; j = i+1}(x_{v,j} \rightarrow x_{u,i}))) \equiv \bigvee\limits_{v \in V} (\bigwedge\limits_{u \in V; u \neq v; {u;v}\in E} (\bigvee\limits_{0 \leq i < k; j = i+1}(\neg x_{v,j} \lor x_{u,i}))) $$
+
+\end{document}
