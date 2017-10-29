@@ -64,15 +64,15 @@ static string forthClause(int k) {
       {
         f += to_string(-(getVerticeRank(v,k)+j)); f += " "; f += to_string((getVerticeRank(u,k)+i)); f += " " ;
       }
-      f += "0\n";
-      nbClauses++;
     }
+    f += "0\n";
+    nbClauses++;
   }
   return f;
 }
 
 int main(int argc, char const *argv[]) {
-  if(argc != 2)
+  if(argc < 2)
   {
     string arg = argv[0];
     return usage(arg);
