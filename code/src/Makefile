@@ -1,5 +1,5 @@
-EXEC := SatFile
-SRC := $(wildcard *.cc)
-OBJ := $(SRC:.cc = .o)
+% : SatFile.cc %.c
+	g++ SatFile.cc $@.c -o $@
 
-all : $(EXEC)
+clean :
+	find . -perm +100 -type f -delete
