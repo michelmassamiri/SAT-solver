@@ -50,11 +50,6 @@ static int getNbClauses(int k) {
       nbClauses++;
   }
 
-  for(int v = 0; v < orderG(); ++v)
-  {
-    nbClauses++;
-  }
-
   nbClauses += orderG();
 
   return nbClauses ;
@@ -124,21 +119,6 @@ static string forthClause(int k) {
       }
       f+= "0\n";
     }
-  }
-
-  for(int v = 0 ; v < orderG() ; ++v) {
-    for(int i = 1 ; i <= k ; ++i) {
-      for(int u = 0 ; u < orderG() ; ++u) {
-        if(u == v || are_adjacent(v, u) == 0)
-          continue ;
-
-        f+= to_string((getVerticeRank(u, k)) + (i-1));
-        f+= " ";
-        f+= to_string((getVerticeRank(v, k)) + (i));
-        f+= " ";
-      }
-    }
-    f+= "0\n";
   }
 
   for(int v = 0; v < orderG(); ++v)
