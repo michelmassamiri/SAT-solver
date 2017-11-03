@@ -14,10 +14,10 @@ private:
 
 public:
 	CoverTree(std::string SATstr);
-	CoverTree(int vertice, std::vector<int> v);
+	CoverTree(int vertice, std::vector<int> v, int k);
 	~CoverTree();
 	std::string toString();
-	void addSon(int vertice);
+	void addSon(int vertice, std::vector<int> v, int k);
 	std::vector<CoverTree*> getSons();
 
 	int getVertice();

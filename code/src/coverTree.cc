@@ -4,7 +4,7 @@
 #include <cmath>
 
 
-std::ostream & operator<<(std::ostream & ofs, CoverTree const & cvt)
+std::ostream & operator<<(std::ostream & ofs, CoverTree & cvt)
 {
 	ofs << cvt.toString();
 	return ofs;
@@ -14,12 +14,12 @@ std::vector<std::string> explode(std::string str, char separator)
 {
 	std::vector<std::string> result;
 	std::string resultStr = "";
-	int len = std::strlen(str);
+	int len = str.size();
 	for(int i = 0; i < len; ++i)
 	{
 		if(str[i] == separator)
 		{
-			result.pushback(resultStr);
+			result.push_back(resultStr);
 			resultStr = "";
 		}
 		else
@@ -34,7 +34,7 @@ CoverTree::CoverTree(std::string SATstr)
 	std::vector<int> explodedSatInt;
 	int len = explodedSat.size()-1;
 	for(int i = 1; i < len; ++i)
-		explodedSatInt.pushback(std::stol(explodedSat[i]));
+		explodedSatInt.push_back(std::stol(explodedSat[i]));
 	
 	int count = 0; 
 	for(int i = 0; i < len - 1; ++i)
@@ -59,12 +59,12 @@ CoverTree::CoverTree(std::string SATstr)
 			continue;
 		if(are_adjacent(getVertice(), explodedSatInt[i]) == 0)
 			continue;
-		addSon(floor(i/k), explodedSatInt);
+		addSon(floor(i/k), explodedSatInt, k);
 	}
 	
 }
 
-CoverTree::CoverTree(int vertice, std::vector<int> v) : m_vertice(vertice) 
+CoverTree::CoverTree(int vertice, std::vector<int> v, int k) : m_vertice(vertice) 
 {
 	int size = v.size();
 	for(int i = 0; i < size; ++i)
@@ -73,7 +73,7 @@ CoverTree::CoverTree(int vertice, std::vector<int> v) : m_vertice(vertice)
 			continue;
 		if(are_adjacent(getVertice(), v[i]) == 0)
 			continue;
-		addSon(floor(i/k), v);
+		addSon(floor(i/k), v, k);
 	}
 }
 
@@ -84,10 +84,10 @@ CoverTree::~CoverTree()
 		delete m_sons[i];
 }
 
-void CoverTree::addSon(int vertice)
+void CoverTree::addSon(int vertice, std::vector<int> v, int k)
 {
-	CoverTree *cvt = new CoverTree(vertice);
-	m_sons.pushback(cvt);
+	CoverTree *cvt = new CoverTree(vertice, v, k);
+	m_sons.push_back(cvt);
 }
 
 std::string CoverTree::toString()
@@ -110,6 +110,6 @@ std::string CoverTree::toString()
 	return str;
 }
 
-std::vector<CoverTree*> CovertTree::getSons() { return m_sons; }
+std::vector<CoverTree*> CoverTree::getSons() { return m_sons; }
 
-int CovertTree::getVertice() { return m_vertice; }
+int CoverTree::getVertice() { return m_vertice; }
