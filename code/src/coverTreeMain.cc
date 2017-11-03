@@ -20,8 +20,10 @@ int main(int argc, char *argv[])
 	ifstream file(fileName);
 	while(getline(file, line));
 
-	CoverTree cvt(line);
+	CoverTree *cvt = new CoverTree(line);
 	cout << cvt;
+
+	delete cvt;
 
 	return 0;
 }
