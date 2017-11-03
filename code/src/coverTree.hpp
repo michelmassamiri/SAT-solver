@@ -2,20 +2,29 @@
 #define _COVERTREE_
 
 #include <vector>
+#include <iostream>
 
 std::vector<std::string> explode(std::string str, char separator);
 
 class CoverTree
 {
 private:
-	int m_vertices;
-	std::vector<std::vector<int>> m_edges;
-	int m_root;
+	int m_vertice;
+	std::vector<CoverTree*> m_sons;
 
 public:
 	CoverTree(std::string SATstr);
+	CoverTree(int vertice, std::vector<int> v);
+	~CoverTree();
+	std::string toString();
+	void addSon(int vertice);
+	std::vector<CoverTree*> getSons();
+
+	int getVertice();
 	
 	
 };
+
+std::ostream & operator<<(std::ostream & ofs, CoverTree const & cvt);
 
 #endif

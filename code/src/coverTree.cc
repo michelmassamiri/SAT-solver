@@ -1,6 +1,14 @@
 #include "coverTree.hpp"
 #include "all.h"
 #include <string>
+#include <cmath>
+
+
+std::ostream & operator<<(std::ostream & ofs, CoverTree const & cvt)
+{
+	ofs << cvt.toString();
+	return ofs;
+}
 
 std::vector<std::string> explode(std::string str, char separator)
 {
@@ -34,25 +42,74 @@ CoverTree::CoverTree(std::string SATstr)
 		if(explodedSatInt[i] > 0)
 			++count;
 	}
-
-	m_vertices = count;
-	m_edges.reserve(m_vertices);
-	for(int i = 0; i < m_vertices; ++i)
-	{
-		for(int j = 0; j < m_vertices; ++j)
-		{
-			if(i == j)
-				continue; 
-			if(are_adjacent(i, j) == 1)
-				m_edges[i].pushback(j);
-
-		}
-	}
-
 	int k = (len-1 / count);
-	for(int i = 0; i < len-1; i+= k)
+
+	for(int i = 0; i < len-1; i += k)
 	{
 		if(explodedSatInt[i] > 0)
-			m_root = i;
+		{
+			m_vertice = i / k;
+			explodedSatInt[i] -= explodedSatInt[i];
+			break;
+		}
+	}
+	for(int i = 0; i < len - 1; ++i)
+	{
+		if(!(explodedSatInt[i] > 0))
+			continue;
+		if(are_adjacent(getVertice(), explodedSatInt[i]) == 0)
+			continue;
+		addSon(floor(i/k), explodedSatInt);
+	}
+	
+}
+
+CoverTree::CoverTree(int vertice, std::vector<int> v) : m_vertice(vertice) 
+{
+	int size = v.size();
+	for(int i = 0; i < size; ++i)
+	{
+		if(!(v[i] > 0))
+			continue;
+		if(are_adjacent(getVertice(), v[i]) == 0)
+			continue;
+		addSon(floor(i/k), v);
 	}
 }
+
+CoverTree::~CoverTree()
+{
+	int l = m_sons.size();
+	for(int i = 0; i < l; ++i)
+		delete m_sons[i];
+}
+
+void CoverTree::addSon(int vertice)
+{
+	CoverTree *cvt = new CoverTree(vertice);
+	m_sons.pushback(cvt);
+}
+
+std::string CoverTree::toString()
+{
+	std::string str = "";
+	str += std::to_string(m_vertice);
+	int l = m_sons.size();
+	if(l > 0)
+	{
+		str += " - ( ";
+		for(int i = 0; i < l; ++i)
+		{
+			str += m_sons[i]->toString();
+		}
+		str += " ) ";	
+	}
+	else
+		str += " ";
+
+	return str;
+}
+
+std::vector<CoverTree*> CovertTree::getSons() { return m_sons; }
+
+int CovertTree::getVertice() { return m_vertice; }

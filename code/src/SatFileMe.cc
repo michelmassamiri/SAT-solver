@@ -78,7 +78,6 @@ static string secondClause(int k) {
         continue ;
 
       f += to_string(-(getVerticeRank(v, k))); f += " "; f += to_string(-(getVerticeRank(u, k))); f += " 0\n";
-      nbClauses++;
     }
   }
 
